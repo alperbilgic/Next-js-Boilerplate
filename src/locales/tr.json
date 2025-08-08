@@ -1,0 +1,85 @@
+{
+  "RootLayout": {
+    "home_link": "Ana sayfa",
+    "about_link": "Hakkında",
+    "counter_link": "Sayaç",
+    "portfolio_link": "Portföy",
+    "sign_in_link": "Giriş yap",
+    "sign_up_link": "Kayıt ol"
+  },
+  "BaseTemplate": {
+    "description": "Tailwind CSS ile Next.js için başlangıç kodu",
+    "made_with": "<author></author> ile yapıldı."
+  },
+  "Index": {
+    "meta_title": "Ana sayfa",
+    "meta_description": "Hoş geldiniz.",
+    "sponsors_title": ""
+  },
+  "Counter": {
+    "meta_title": "Sayaç",
+    "meta_description": "Bir veritabanı işlemi örneği",
+    "loading_counter": "Sayaç yükleniyor...",
+    "security_powered_by": "Güvenlik, bot tespiti ve hız sınırlama, tarafından sağlanır"
+  },
+  "CounterForm": {
+    "presentation": "Sayaç veritabanında saklanır ve verdiğiniz değer kadar artırılır.",
+    "label_increment": "Artırma miktarı",
+    "button_increment": "Artır",
+    "error_increment_range": "Değer 1 ile 3 arasında olmalı"
+  },
+  "CurrentCount": {
+    "count": "Sayı: {count}"
+  },
+  "About": {
+    "meta_title": "Hakkında",
+    "meta_description": "Hakkında sayfası açıklaması",
+    "about_paragraph": "Hakkında sayfamıza hoş geldiniz! Harika yazılımlar oluşturmaya adanmış tutkulu bir ekibiz.",
+    "translation_powered_by": "Çeviri tarafından desteklenir"
+  },
+  "Portfolio": {
+    "meta_title": "Portföy",
+    "meta_description": "Portföy sayfama hoş geldiniz!",
+    "presentation": "Portföy sayfama hoş geldiniz! Burada, çalışmalarım ve başarılarımdan özenle seçilmiş bir koleksiyon bulacaksınız. Bu portföy aracılığıyla uzmanlığımı, yaratıcı yaklaşımımı ve projelerinize katabileceğim değeri göstermek istiyorum.",
+    "portfolio_name": "Portföy {name}",
+    "error_reporting_powered_by": "Hata raporlama tarafından desteklenir",
+    "coverage_powered_by": "Kod kapsamı tarafından desteklenir"
+  },
+  "PortfolioSlug": {
+    "meta_title": "Portföy {slug}",
+    "meta_description": "Portföy {slug} açıklaması",
+    "header": "Portföy {slug}",
+    "content": "Kurumsal bir etkinlik için tanıtım materyalleri ve marka unsurlarından oluşan bir set oluşturdum. Logo, afişler, pankartlar ve dijital varlıkları kapsayan görsel olarak bütünleşik bir tema tasarladım. Müşterinin marka kimliğini korurken ona çağdaş ve yenilikçi bir yaklaşım kattım.",
+    "code_review_powered_by": "Kod inceleme tarafından desteklenir"
+  },
+  "SignIn": {
+    "meta_title": "Giriş yap",
+    "meta_description": "Kullanıcı dostu giriş sürecimizle hesabınıza kolayca giriş yapın."
+  },
+  "SignUp": {
+    "meta_title": "Kayıt ol",
+    "meta_description": "Sezgisel kayıt sürecimizle kolayca hesap oluşturun."
+  },
+  "Dashboard": {
+    "meta_title": "Panel",
+    "hello_message": "Merhaba {email}!",
+    "hello_guest": "Merhaba!",
+    "alternative_message": ""
+  },
+  "UserProfile": {
+    "meta_title": "Kullanıcı Profili"
+  },
+  "DashboardLayout": {
+    "dashboard_link": "Panel",
+    "user_profile_link": "Hesabını yönet",
+    "sign_out": "Çıkış yap"
+  },
+  "ResetPassword": {
+    "meta_title": "Şifreyi Sıfırla",
+    "meta_description": "Hesabınıza yeniden erişmek için şifrenizi sıfırlayın"
+  },
+  "VerifyEmail": {
+    "meta_title": "E-postayı Doğrula",
+    "meta_description": "Hesap kurulumunu tamamlamak için e-posta adresinizi doğrulayın"
+  }
+}

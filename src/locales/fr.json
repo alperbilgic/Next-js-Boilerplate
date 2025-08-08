@@ -12,9 +12,9 @@
     "made_with": "Fait avec <author></author>."
   },
   "Index": {
-    "meta_title": "Présentation de Next.js Boilerplate",
-    "meta_description": "Next js Boilerplate est le code de démarrage parfait pour votre projet. Construisez votre application React avec le framework Next.js.",
-    "sponsors_title": "Partenaires"
+    "meta_title": "Accueil",
+    "meta_description": "Bienvenue.",
+    "sponsors_title": ""
   },
   "Counter": {
     "meta_title": "Compteur",
@@ -63,7 +63,8 @@
   "Dashboard": {
     "meta_title": "Tableau de bord",
     "hello_message": "Bonjour {email}!",
-    "alternative_message": "Vous voulez créer votre SaaS plus rapidement en utilisant la même stack ? Essayez <url></url>."
+    "hello_guest": "Bonjour !",
+    "alternative_message": ""
   },
   "UserProfile": {
     "meta_title": "Profil de l'utilisateur"

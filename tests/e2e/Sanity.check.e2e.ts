@@ -17,9 +17,7 @@ test.describe('Sanity', () => {
     test('should display the homepage', async ({ page, baseURL }) => {
       await page.goto(`${baseURL}/`);
 
-      await expect(
-        page.getByRole('heading', { name: 'Boilerplate Code for Your Next.js Project with Tailwind CSS' }),
-      ).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Hello!' })).toBeVisible();
     });
 
     test('should navigate to the about page', async ({ page, baseURL }) => {

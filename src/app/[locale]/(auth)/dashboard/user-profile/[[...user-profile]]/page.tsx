@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { SignOutButton } from '@/components/SignOutButton';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 import { auth } from '@/libs/Auth';
 
 type IUserProfilePageProps = {
@@ -35,41 +37,32 @@ export default async function UserProfilePage(props: IUserProfilePageProps) {
 
   return (
     <div className="my-6">
-      <h1 className="mb-6 text-2xl font-bold">{t('meta_title')}</h1>
-
-      <div className="max-w-md rounded-lg bg-white p-6 shadow">
-        <div className="space-y-4">
-          <div>
-            <div className="block text-sm font-medium text-gray-700">Name</div>
-            <p className="mt-1 text-sm text-gray-900">{session.user.name}</p>
+      <Card className="max-w-md">
+        <CardHeader>
+          <CardTitle>{t('meta_title')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-1">
+            <Label>Name</Label>
+            <p className="text-sm">{session.user.name}</p>
           </div>
-
-          <div>
-            <div className="block text-sm font-medium text-gray-700">Email</div>
-            <p className="mt-1 text-sm text-gray-900">{session.user.email}</p>
+          <div className="space-y-1">
+            <Label>Email</Label>
+            <p className="text-sm">{session.user.email}</p>
           </div>
-
-          <div>
-            <div className="block text-sm font-medium text-gray-700">Email Verified</div>
-            <p className="mt-1 text-sm text-gray-900">
-              {session.user.emailVerified ? 'Yes' : 'No'}
-            </p>
+          <div className="space-y-1">
+            <Label>Email Verified</Label>
+            <p className="text-sm">{session.user.emailVerified ? 'Yes' : 'No'}</p>
           </div>
-
-          <div>
-            <div className="block text-sm font-medium text-gray-700">Member Since</div>
-            <p className="mt-1 text-sm text-gray-900">
-              {new Date(session.user.createdAt).toLocaleDateString()}
-            </p>
+          <div className="space-y-1">
+            <Label>Member Since</Label>
+            <p className="text-sm">{new Date(session.user.createdAt).toLocaleDateString()}</p>
           </div>
-        </div>
-
-        <div className="mt-6 border-t border-gray-200 pt-6">
-          <SignOutButton locale={locale}>
-            Sign Out
-          </SignOutButton>
-        </div>
-      </div>
+        </CardContent>
+        <CardFooter className="border-t pt-6">
+          <SignOutButton locale={locale}>Sign Out</SignOutButton>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

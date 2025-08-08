@@ -1,7 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { auth } from '@/libs/Auth';
-import { Sponsors } from './Sponsors';
 
 export const Hello = async () => {
   const t = await getTranslations('Dashboard');
@@ -11,23 +10,12 @@ export const Hello = async () => {
 
   return (
     <>
-      <p>
+      <h2 className="text-2xl font-bold">
         {`👋 `}
-        {t('hello_message', { email: session?.user?.email ?? '' })}
-      </p>
-      <p>
-        {t.rich('alternative_message', {
-          url: () => (
-            <a
-              className="text-blue-700 hover:border-b-2 hover:border-blue-700"
-              href="https://nextjs-boilerplate.com/pro-saas-starter-kit"
-            >
-              Next.js Boilerplate SaaS
-            </a>
-          ),
-        })}
-      </p>
-      <Sponsors />
+        {session?.user?.email
+          ? t('hello_message', { email: session.user.email })
+          : t('hello_guest')}
+      </h2>
     </>
   );
 };

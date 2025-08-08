@@ -1,7 +1,9 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { headers } from 'next/headers';
 import Link from 'next/link';
-import { DemoBanner } from '@/components/DemoBanner';
 import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { SignOutButton } from '@/components/SignOutButton';
+import { auth } from '@/libs/Auth';
 import { BaseTemplate } from '@/templates/BaseTemplate';
 
 export default async function Layout(props: {
@@ -14,10 +16,17 @@ export default async function Layout(props: {
     locale,
     namespace: 'RootLayout',
   });
+  const tDashboard = await getTranslations({
+    locale,
+    namespace: 'DashboardLayout',
+  });
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <>
-      <DemoBanner />
       <BaseTemplate
         leftNav={(
           <>
@@ -53,35 +62,38 @@ export default async function Layout(props: {
                 {t('portfolio_link')}
               </Link>
             </li>
-            <li>
-              <a
-                className="border-none text-gray-700 hover:text-gray-900"
-                href="https://github.com/ixartz/Next-js-Boilerplate"
-              >
-                GitHub
-              </a>
-            </li>
           </>
         )}
         rightNav={(
           <>
-            <li>
-              <Link
-                href="/sign-in/"
-                className="border-none text-gray-700 hover:text-gray-900"
-              >
-                {t('sign_in_link')}
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href="/sign-up/"
-                className="border-none text-gray-700 hover:text-gray-900"
-              >
-                {t('sign_up_link')}
-              </Link>
-            </li>
+            {session
+              ? (
+                  <li>
+                    <SignOutButton locale={locale}>
+                      {tDashboard('sign_out')}
+                    </SignOutButton>
+                  </li>
+                )
+              : (
+                  <>
+                    <li>
+                      <Link
+                        href="/sign-in/"
+                        className="border-none text-gray-700 hover:text-gray-900"
+                      >
+                        {t('sign_in_link')}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/sign-up/"
+                        className="border-none text-gray-700 hover:text-gray-900"
+                      >
+                        {t('sign_up_link')}
+                      </Link>
+                    </li>
+                  </>
+                )}
 
             <li>
               <LocaleSwitcher />
