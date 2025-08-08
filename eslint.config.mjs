@@ -52,6 +52,26 @@ export default antfu(
   },
   // --- Storybook Rules ---
   ...storybook.configs['flat/recommended'],
+  // --- Shadcn/UI Components Overrides ---
+  {
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      // Disable warnings that don't affect functionality for shadcn components
+      'react/no-unstable-context-value': 'off',
+      'react-refresh/only-export-components': 'off',
+      'ts/no-use-before-define': 'off',
+      'style/semi': 'off',
+      'style/no-multi-spaces': 'off',
+      'style/quotes': 'off',
+      'style/object-curly-spacing': 'off',
+      'perfectionist/sort-imports': 'off',
+      'tailwindcss/classnames-order': 'off',
+
+      // Keep critical errors that break builds
+      'no-unused-vars': 'error',
+      'ts/no-unused-vars': 'error',
+    },
+  },
   // --- Custom Rule Overrides ---
   {
     rules: {

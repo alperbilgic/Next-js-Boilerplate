@@ -153,7 +153,14 @@ jobs:
         with:
           args: sh -c "HOME=/root npm run test:e2e" # Set HOME to /root to avoid Playwright error with Firebox
         env:
-          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          BETTER_AUTH_URL: http://localhost:3000
+          SMTP_HOST: smtp.mailtrap.io
+          SMTP_PORT: 2525
+          SMTP_USER: test
+          SMTP_PASSWORD: test
+          SMTP_FROM: noreply@test.com
+          SMTP_SECURE: false
 
       - name: Fix test results permission # Give permissions to test results needed by Chromatic
         run: |

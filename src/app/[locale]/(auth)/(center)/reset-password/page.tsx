@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { AuthForm } from '@/components/AuthForm';
+import { ResetPasswordForm } from '@/components/ResetPasswordForm';
 
-type ISignUpPageProps = {
+type IResetPasswordPageProps = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata(props: ISignUpPageProps): Promise<Metadata> {
+export async function generateMetadata(props: IResetPasswordPageProps): Promise<Metadata> {
   const { locale } = await props.params;
   const t = await getTranslations({
     locale,
-    namespace: 'SignUp',
+    namespace: 'ResetPassword',
   });
 
   return {
@@ -19,9 +19,9 @@ export async function generateMetadata(props: ISignUpPageProps): Promise<Metadat
   };
 }
 
-export default async function SignUpPage(props: ISignUpPageProps) {
+export default async function ResetPasswordPage(props: IResetPasswordPageProps) {
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  return <AuthForm mode="signup" locale={locale} />;
+  return <ResetPasswordForm locale={locale} />;
 };

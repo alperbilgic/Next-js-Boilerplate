@@ -72,5 +72,13 @@
     "dashboard_link": "Tableau de bord",
     "user_profile_link": "Gérer votre compte",
     "sign_out": "Se déconnecter"
+  },
+  "ResetPassword": {
+    "meta_title": "Réinitialiser le mot de passe",
+    "meta_description": "Réinitialisez votre mot de passe pour retrouver l'accès à votre compte"
+  },
+  "VerifyEmail": {
+    "meta_title": "Vérifier l'email",
+    "meta_description": "Vérifiez votre adresse email pour finaliser la configuration de votre compte"
   }
 }

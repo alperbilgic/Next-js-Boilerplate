@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { AuthForm } from '@/components/AuthForm';
+import { EmailVerification } from '@/components/EmailVerification';
 
-type ISignUpPageProps = {
+type IVerifyEmailPageProps = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata(props: ISignUpPageProps): Promise<Metadata> {
+export async function generateMetadata(props: IVerifyEmailPageProps): Promise<Metadata> {
   const { locale } = await props.params;
   const t = await getTranslations({
     locale,
-    namespace: 'SignUp',
+    namespace: 'VerifyEmail',
   });
 
   return {
@@ -19,9 +19,9 @@ export async function generateMetadata(props: ISignUpPageProps): Promise<Metadat
   };
 }
 
-export default async function SignUpPage(props: ISignUpPageProps) {
+export default async function VerifyEmailPage(props: IVerifyEmailPageProps) {
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  return <AuthForm mode="signup" locale={locale} />;
+  return <EmailVerification locale={locale} />;
 };

@@ -7,16 +7,16 @@ export const Sponsors = () => (
       <tr className="h-56">
         <td className="border-2 border-gray-300 p-3">
           <a
-            href="https://clerk.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate"
+            href="https://better-auth.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate"
             target="_blank"
             rel="noopener"
           >
-            <Image
-              src="/assets/images/clerk-logo-dark.png"
-              alt="Clerk – Authentication & User Management for Next.js"
-              width={260}
-              height={224}
-            />
+            <div className="flex h-56 items-center justify-center bg-gray-50 text-gray-600">
+              <div className="text-center">
+                <h3 className="mb-2 text-xl font-bold">Better Auth</h3>
+                <p className="text-sm">Authentication for Next.js</p>
+              </div>
+            </div>
           </a>
         </td>
         <td className="border-2 border-gray-300 p-3">

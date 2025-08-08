@@ -1,72 +1,64 @@
-import type { NextFetchEvent, NextRequest } from 'next/server';
-import { detectBot } from '@arcjet/next';
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
-import arcjet from '@/libs/Arcjet';
 import { routing } from './libs/I18nRouting';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/:locale/dashboard(.*)',
-]);
+// Simple check for protected routes
+const isProtectedRoute = (pathname: string) => {
+  return pathname.includes('/dashboard');
+};
 
-const isAuthPage = createRouteMatcher([
-  '/sign-in(.*)',
-  '/:locale/sign-in(.*)',
-  '/sign-up(.*)',
-  '/:locale/sign-up(.*)',
-]);
+// Simple check for auth pages
+const isAuthPage = (pathname: string) => {
+  return pathname.includes('/sign-in')
+    || pathname.includes('/sign-up')
+    || pathname.includes('/reset-password')
+    || pathname.includes('/verify-email');
+};
 
-// Improve security with Arcjet
-const aj = arcjet.withRule(
-  detectBot({
-    mode: 'LIVE',
-    // Block all bots except the following
-    allow: [
-      // See https://docs.arcjet.com/bot-protection/identifying-bots
-      'CATEGORY:SEARCH_ENGINE', // Allow search engines
-      'CATEGORY:PREVIEW', // Allow preview links to show OG images
-      'CATEGORY:MONITOR', // Allow uptime monitoring services
-    ],
-  }),
-);
+export default async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
 
-export default async function middleware(
-  request: NextRequest,
-  event: NextFetchEvent,
-) {
-  // Verify the request with Arcjet
-  // Use `process.env` instead of Env to reduce bundle size in middleware
-  if (process.env.ARCJET_KEY) {
-    const decision = await aj.protect(request);
+  // Skip middleware for API routes, static files, and monitoring
+  if (
+    pathname.startsWith('/api/')
+    || pathname.startsWith('/_next/')
+    || pathname.startsWith('/_vercel/')
+    || pathname.startsWith('/monitoring')
+    || pathname.includes('.')
+  ) {
+    return NextResponse.next();
+  }
 
-    if (decision.isDenied()) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  // Check authentication for protected routes
+  if (isProtectedRoute(pathname)) {
+    // Check for session cookie (Better Auth uses 'better-auth.session_token' by default)
+    const sessionToken = request.cookies.get('better-auth.session_token');
+
+    if (!sessionToken) {
+      // Extract locale from pathname if present
+      const locale = pathname.match(/^\/([a-z]{2})\//)?.[1];
+      const signInPath = locale ? `/${locale}/sign-in` : '/sign-in';
+
+      return NextResponse.redirect(new URL(signInPath, request.url));
     }
   }
 
-  // Clerk keyless mode doesn't work with i18n, this is why we need to run the middleware conditionally
-  if (
-    isAuthPage(request) || isProtectedRoute(request)
-  ) {
-    return clerkMiddleware(async (auth, req) => {
-      if (isProtectedRoute(req)) {
-        const locale = req.nextUrl.pathname.match(/(\/.*)\/dashboard/)?.at(1) ?? '';
+  // Redirect to dashboard if accessing auth pages while authenticated
+  if (isAuthPage(pathname)) {
+    const sessionToken = request.cookies.get('better-auth.session_token');
 
-        const signInUrl = new URL(`${locale}/sign-in`, req.url);
+    if (sessionToken) {
+      const locale = pathname.match(/^\/([a-z]{2})\//)?.[1];
+      const dashboardPath = locale ? `/${locale}/dashboard` : '/dashboard';
 
-        await auth.protect({
-          unauthenticatedUrl: signInUrl.toString(),
-        });
-      }
-
-      return handleI18nRouting(request);
-    })(request, event);
+      return NextResponse.redirect(new URL(dashboardPath, request.url));
+    }
   }
 
+  // Handle i18n routing
   return handleI18nRouting(request);
 }
 
@@ -74,5 +66,5 @@ export const config = {
   // Match all pathnames except for
   // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
   // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: '/((?!_next|_vercel|monitoring|.*\\..*).*)',
+  matcher: '/((?!api|_next|_vercel|monitoring|.*\\..*).*)',
 };

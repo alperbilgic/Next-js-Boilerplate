@@ -11,6 +11,22 @@ const baseConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  serverExternalPackages: ['better-auth', 'drizzle-orm', 'nodemailer'],
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Don't try to bundle these Node.js modules for the client
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        'node:crypto': false,
+        'node:fs': false,
+        'node:path': false,
+        'crypto': false,
+        'fs': false,
+        'path': false,
+      };
+    }
+    return config;
+  },
 };
 
 // Initialize the Next-Intl plugin

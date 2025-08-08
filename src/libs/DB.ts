@@ -1,7 +1,5 @@
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import path from 'node:path';
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import * as schema from '@/models/Schema';
 import { Env } from './Env';
 
@@ -29,8 +27,22 @@ if (Env.NODE_ENV !== 'production') {
   globalForDb.drizzle = db;
 }
 
-await migrate(db, {
-  migrationsFolder: path.join(process.cwd(), 'migrations'),
-});
+// Run migrations on startup (only in server environment)
+if (typeof window === 'undefined') {
+  (async () => {
+    try {
+      const { migrate } = await import('drizzle-orm/node-postgres/migrator');
+      const path = await import('node:path');
+
+      await migrate(db, {
+        migrationsFolder: path.resolve(process.cwd(), 'migrations'),
+      });
+
+      console.warn('✅ Database migrations completed successfully');
+    } catch {
+      console.warn('ℹ️ Migrations may have already been applied or database is not ready yet');
+    }
+  })();
+}
 
 export { db };

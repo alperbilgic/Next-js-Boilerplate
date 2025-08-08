@@ -72,5 +72,13 @@
     "dashboard_link": "Dashboard",
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
+  },
+  "ResetPassword": {
+    "meta_title": "Reset Password",
+    "meta_description": "Reset your password to regain access to your account"
+  },
+  "VerifyEmail": {
+    "meta_title": "Verify Email",
+    "meta_description": "Verify your email address to complete your account setup"
   }
 }
