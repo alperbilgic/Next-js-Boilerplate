@@ -1,0 +1,48 @@
+{
+  "modelName": "claude-sonnet-4-20250514",
+  "enableTelemetry": false,
+  "environmentVariables": {
+    "CLAUDE_AUTO_MODE": "true",
+    "CLAUDE_SKIP_PERMISSIONS": "false"
+  },
+  "maxTokens": 8192,
+  "temperature": 0.1,
+  "tools": {
+    "bash": {
+      "enabled": true,
+      "timeoutMs": 300000,
+      "allowDangerousCommands": false
+    },
+    "edit": {
+      "enabled": true,
+      "preserveLineNumbers": true
+    },
+    "read": {
+      "enabled": true,
+      "maxFileSize": "10MB"
+    },
+    "search": {
+      "enabled": true,
+      "preferRipgrep": true
+    }
+  },
+  "hooks": {
+    "pre-tool-use": [
+      "echo 'Executing tool with context optimization...'"
+    ],
+    "post-tool-use": [
+      "echo 'Tool execution completed. Validating results...'"
+    ]
+  },
+  "context": {
+    "maxContextLength": 200000,
+    "smartTruncation": true,
+    "prioritizeRecent": true
+  },
+  "automation": {
+    "autoLint": true,
+    "autoTest": false,
+    "autoCommit": false,
+    "skipPromptOnSafeOperations": true
+  }
+}

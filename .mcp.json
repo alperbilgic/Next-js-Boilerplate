@@ -1,0 +1,60 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      },
+      "description": "GitHub integration for repository management, PR automation, and issue handling"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/alperbilgic/Code/temp/Next-js-Boilerplate"],
+      "description": "Enhanced file system operations with safe read/write access"
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}"
+      },
+      "description": "PostgreSQL database integration for schema management and queries"
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "description": "Browser automation for E2E testing and visual development workflow"
+    },
+    "typescript": {
+      "command": "npx",
+      "args": ["-y", "mcp-typescript"],
+      "description": "Advanced TypeScript API assistance and type checking"
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git", "--repository", "/Users/alperbilgic/Code/temp/Next-js-Boilerplate"],
+      "description": "Git operations and repository management"
+    }
+  },
+  "environments": {
+    "development": {
+      "enableAll": true,
+      "priority": ["filesystem", "git", "typescript", "postgres"]
+    },
+    "testing": {
+      "enabled": ["filesystem", "git", "puppeteer", "postgres"],
+      "priority": ["puppeteer", "postgres"]
+    },
+    "production": {
+      "enabled": ["git", "github"],
+      "priority": ["github", "git"]
+    }
+  },
+  "settings": {
+    "timeout": 30000,
+    "retries": 3,
+    "logLevel": "info",
+    "enableCaching": true
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "environments": {
+    "development": {
+      "database": {
+        "type": "PGlite",
+        "url": "file://local.db",
+        "migrations": "auto-apply"
+      },
+      "auth": {
+        "baseUrl": "http://localhost:3000",
+        "emailVerification": "mock"
+      },
+      "monitoring": {
+        "sentry": "disabled",
+        "posthog": "disabled"
+      },
+      "features": {
+        "devtools": true,
+        "hotReload": true,
+        "sourceMap": true
+      }
+    },
+    "test": {
+      "database": {
+        "type": "in-memory",
+        "resetBetweenTests": true
+      },
+      "auth": {
+        "mock": true,
+        "skipVerification": true
+      },
+      "monitoring": {
+        "all": "disabled"
+      },
+      "features": {
+        "coverage": true,
+        "verbose": false
+      }
+    },
+    "staging": {
+      "database": {
+        "type": "PostgreSQL",
+        "ssl": true,
+        "connectionPool": true
+      },
+      "auth": {
+        "emailVerification": "enabled",
+        "rateLimiting": "enabled"
+      },
+      "monitoring": {
+        "sentry": "enabled",
+        "posthog": "limited"
+      },
+      "features": {
+        "bundleAnalyzer": true,
+        "performanceMonitoring": true
+      }
+    },
+    "production": {
+      "database": {
+        "type": "PostgreSQL",
+        "ssl": true,
+        "connectionPool": true,
+        "readReplicas": true
+      },
+      "auth": {
+        "emailVerification": "required",
+        "rateLimiting": "strict",
+        "sessionSecurity": "high"
+      },
+      "monitoring": {
+        "sentry": "enabled",
+        "posthog": "enabled",
+        "logging": "structured"
+      },
+      "features": {
+        "optimization": "maximum",
+        "caching": "aggressive",
+        "compression": true
+      }
+    }
+  },
+  "requiredVariables": {
+    "all": [
+      "BETTER_AUTH_SECRET",
+      "BETTER_AUTH_URL"
+    ],
+    "production": [
+      "DATABASE_URL",
+      "SMTP_HOST",
+      "SMTP_PORT",
+      "SMTP_USER",
+      "SMTP_PASSWORD",
+      "SMTP_FROM"
+    ],
+    "monitoring": [
+      "SENTRY_DSN",
+      "NEXT_PUBLIC_POSTHOG_KEY",
+      "NEXT_PUBLIC_POSTHOG_HOST"
+    ],
+    "security": [
+      "ARCJET_KEY"
+    ]
+  },
+  "validation": {
+    "env": "T3 Env",
+    "runtime": "process.env validation on startup",
+    "client": "NEXT_PUBLIC_ prefix for client-side variables"
+  },
+  "security": {
+    "secretsManagement": "Environment variables",
+    "secretsValidation": "Required secrets checked at startup",
+    "secretsRotation": "Manual rotation with deployment",
+    "dataProtection": {
+      "encryption": "At rest and in transit",
+      "piiHandling": "GDPR compliant",
+      "auditLogging": "Security events logged"
+    }
+  },
+  "performance": {
+    "caching": {
+      "static": "CDN + browser cache",
+      "api": "Response caching where appropriate",
+      "database": "Connection pooling"
+    },
+    "optimization": {
+      "bundleSize": "Monitored with analyzer",
+      "codesplitting": "Automatic with Next.js",
+      "imageOptimization": "Next.js Image component"
+    }
+  },
+  "deployment": {
+    "automation": {
+      "migrations": "Auto-apply during build",
+      "healthChecks": "Built-in Next.js health endpoint",
+      "rollback": "Container-based with previous version"
+    },
+    "scaling": {
+      "horizontal": "Multiple container instances",
+      "database": "Connection pooling + read replicas",
+      "cdn": "Static asset distribution"
+    }
+  }
+}

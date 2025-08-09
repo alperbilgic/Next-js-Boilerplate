@@ -1,0 +1,98 @@
+{
+  "project": {
+    "name": "Next.js Boilerplate",
+    "type": "nextjs",
+    "version": "15+",
+    "description": "Production-ready Next.js boilerplate with TypeScript, authentication, and database integration"
+  },
+  "stack": {
+    "framework": "Next.js 15+",
+    "language": "TypeScript",
+    "styling": "Tailwind CSS 4",
+    "database": {
+      "orm": "Drizzle ORM",
+      "engine": "PostgreSQL",
+      "development": "PGlite"
+    },
+    "authentication": "Better Auth",
+    "testing": {
+      "unit": "Vitest",
+      "e2e": "Playwright",
+      "component": "Storybook"
+    },
+    "monitoring": {
+      "errors": "Sentry",
+      "analytics": "PostHog"
+    },
+    "security": "Arcjet"
+  },
+  "paths": {
+    "components": "src/components/",
+    "pages": "src/app/[locale]/",
+    "api": "src/app/api/",
+    "database": "src/models/Schema.ts",
+    "validations": "src/validations/",
+    "libs": "src/libs/",
+    "tests": {
+      "unit": "tests/integration/",
+      "e2e": "tests/e2e/",
+      "components": "**/*.stories.tsx"
+    },
+    "migrations": "migrations/",
+    "locales": "src/locales/"
+  },
+  "commands": {
+    "dev": "npm run dev",
+    "build": "npm run build",
+    "test": "npm test",
+    "test:e2e": "npm run test:e2e",
+    "lint": "npm run lint",
+    "lint:fix": "npm run lint:fix",
+    "typecheck": "npm run check:types",
+    "db:generate": "npm run db:generate",
+    "db:studio": "npm run db:studio"
+  },
+  "patterns": {
+    "components": {
+      "naming": "PascalCase",
+      "structure": "Atomic Design",
+      "props": "TypeScript interfaces",
+      "styling": "Tailwind CSS classes"
+    },
+    "api": {
+      "routes": "RESTful design",
+      "validation": "Zod schemas",
+      "authentication": "Better Auth middleware",
+      "errors": "Structured error responses"
+    },
+    "database": {
+      "schema": "Drizzle schema definitions",
+      "migrations": "Automatic generation",
+      "queries": "Type-safe queries"
+    }
+  },
+  "quality": {
+    "linting": "ESLint with TypeScript rules",
+    "formatting": "Prettier",
+    "typeChecking": "TypeScript strict mode",
+    "testing": {
+      "coverage": "80% minimum",
+      "e2e": "Critical user paths"
+    },
+    "security": "Arcjet protection, input validation"
+  },
+  "automation": {
+    "commitLint": "Conventional commits",
+    "preCommit": "Lefthook with linting and type checking",
+    "buildOptimization": "Bundle analyzer available",
+    "deployment": "Automatic migrations during builds"
+  },
+  "context_priorities": [
+    "src/models/Schema.ts",
+    "src/app/api/",
+    "src/components/",
+    "src/validations/",
+    "package.json",
+    "CLAUDE.md"
+  ]
+}
