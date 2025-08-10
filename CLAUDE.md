@@ -110,3 +110,38 @@ Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
 NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+
+## Agent Delegation Strategy
+ALWAYS evaluate if a task should be delegated to a specialized subagent before implementing it yourself:
+
+### When to Use Subagents
+- **backend-architect**: API design, user management systems, database schema, authentication flows, server-side architecture, RESTful APIs, microservices
+- **frontend-developer**: UI components, React development, Tailwind styling, forms, responsive design, client-side functionality, user interfaces
+- **migration-specialist**: Database migrations, schema changes, data modeling, PostgreSQL operations, Drizzle ORM work
+- **security-auditor**: Security reviews, vulnerability assessment, authentication security, OWASP compliance, input validation, penetration testing
+- **deployment-orchestrator**: CI/CD pipelines, deployment strategies, production setup, Docker, monitoring, DevOps tasks
+- **product-design-expert**: UX/UI design decisions, user experience optimization, design systems, information architecture, user research
+- **test-engineer**: Test automation, unit tests, E2E tests, test coverage, quality assurance, testing strategies
+- **code-reviewer**: Code quality reviews, refactoring suggestions, performance optimization, architectural reviews, best practices
+
+### Multi-Agent Coordination
+For complex tasks requiring multiple specialties:
+1. Break down the task into domain-specific components
+2. Use the Task tool to launch multiple agents in sequence or parallel
+3. Coordinate results between agents
+4. Examples:
+   - Feature development: backend-architect → frontend-developer → test-engineer → code-reviewer
+   - Security audit: security-auditor → code-reviewer → test-engineer
+   - Database changes: migration-specialist → backend-architect → test-engineer
+
+### Task Delegation Decision Process
+1. **Analyze the request**: What domains does it touch?
+2. **Check complexity**: Simple tasks can be handled directly, complex tasks should be delegated
+3. **Consider expertise**: If a task requires deep domain knowledge, delegate to the specialist
+4. **Use Task tool**: `Task(subagent_type="agent-name", description="task", prompt="detailed instructions")`
+
+### When NOT to Delegate
+- Simple file reads or basic searches
+- Straightforward edits to existing files
+- Quick informational queries
+- Tasks that span multiple domains but are trivial in each

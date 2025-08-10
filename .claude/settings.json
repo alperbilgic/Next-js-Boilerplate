@@ -1,48 +1,63 @@
 {
-  "modelName": "claude-sonnet-4-20250514",
-  "enableTelemetry": false,
-  "environmentVariables": {
+  "model": "claude-sonnet-4-20250514",
+  "includeCoAuthoredBy": true,
+  "cleanupPeriodDays": 30,
+  "enableAllProjectMcpServers": true,
+  "env": {
     "CLAUDE_AUTO_MODE": "true",
-    "CLAUDE_SKIP_PERMISSIONS": "false"
-  },
-  "maxTokens": 8192,
-  "temperature": 0.1,
-  "tools": {
-    "bash": {
-      "enabled": true,
-      "timeoutMs": 300000,
-      "allowDangerousCommands": false
-    },
-    "edit": {
-      "enabled": true,
-      "preserveLineNumbers": true
-    },
-    "read": {
-      "enabled": true,
-      "maxFileSize": "10MB"
-    },
-    "search": {
-      "enabled": true,
-      "preferRipgrep": true
-    }
+    "CLAUDE_CONTEXT_OPTIMIZATION": "true"
   },
   "hooks": {
-    "pre-tool-use": [
-      "echo 'Executing tool with context optimization...'"
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/context-optimization.sh"
+          }
+        ]
+      }
     ],
-    "post-tool-use": [
-      "echo 'Tool execution completed. Validating results...'"
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/auto-quality-check.sh"
+          }
+        ]
+      }
     ]
   },
-  "context": {
-    "maxContextLength": 200000,
-    "smartTruncation": true,
-    "prioritizeRecent": true
-  },
-  "automation": {
-    "autoLint": true,
-    "autoTest": false,
-    "autoCommit": false,
-    "skipPromptOnSafeOperations": true
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(git:*)",
+      "Bash(npx:*)",
+      "Bash(next:*)",
+      "Bash(node:*)",
+      "Bash(bun:*)",
+      "Bash(shadcn:*)",
+      "Edit",
+      "Read",
+      "Write",
+      "Grep",
+      "Glob"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)",
+      "Bash(su:*)",
+      "Write(node_modules/**)",
+      "Write(.git/**)",
+      "Write(*.log)",
+      "Write(.next/**)",
+      "Write(out/**)",
+      "Edit(node_modules/**)",
+      "Edit(.git/**)"
+    ],
+    "defaultMode": "acceptEdits"
   }
 }
